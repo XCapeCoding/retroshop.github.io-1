@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>Retro Shop</title>
+        <link rel="shortcut icon" type="image/png" href="https://i.imgur.com/HgIzJ0O.png"/>
+        <link rel="stylesheet" href="styles.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+		<body>
+            <div class="header">
+                <img src="https://i.imgur.com/VWt12Sc.png">
+                <div class="navbar">
+                    <div class="nav">
+                    <a href="#">Home</a>
+                    <a href="#">Offers</a>
+                    <a href="#">Contact</a>
+                    <a href="#">About</a>
+                    </div>
+                        <div class="cart">
+                            <a href="#"><span id="cartAmount">0</span> Item(s) | <span id="cartPrice">0.00</span>€</a>
+                        </div>
+                </div>
+            </div>
+        <div id="items"></div>
+		</body>
+		
+		<script>
+			
+			var items = [
+        {
+            "id": 0,
+            "title": "Hat",
+            "imageURL": "https://i.imgur.com/HgIzJ0O.png",
+            "description": "A retro hat from 1972 wore by Jim Morrison. Size L",
+            "price": 25.99
+        },
+        {
+            "id": 1,
+            "title": "Guitar",
+            "imageURL": "https://i.imgur.com/1pc347r.png",
+            "description": "Used by Jimi Hendrix in Spain tour 1969. Left-handed.",
+            "price": 7560
+        },
+        {
+            "id": 2,
+            "title": "Headset",
+            "imageURL": "https://i.imgur.com/BU1u53U.png",
+            "description": "Mono/Stereo sound.",
+            "price": 129.99
+        },
+        {
+            "id": 3,
+            "title": "Backpack",
+            "imageURL": "https://i.imgur.com/WOGQ3ll.png",
+            "description": "25 liters travel fake-leather",
+            "price": 59.99
+        },
+        {
+            "id": 4,
+            "title": "Glasses",
+            "imageURL": "https://i.imgur.com/KQssRzO.png",
+            "description": "-3.75 left eye -4.25 right eye. Can you buy glasses like this somewhere else? You cannot.",
+            "price": 158.45
+        },
+        {
+            "id": 5,
+            "title": "Camera",
+            "imageURL": "https://i.imgur.com/hifcDsd.png",
+            "description": "Works only with Kodak Pro-289l films",
+            "price": 46.15
+        },
+        {
+            "id": 6,
+            "title": "Skate",
+            "imageURL": "https://i.imgur.com/KiZi7HQ.png",
+            "description": "Tony Hawks first skate.",
+            "price": 2500
+        },
+        {
+            "id": 7,
+            "title": "Shirt",
+            "imageURL": "https://i.imgur.com/4OZIWFV.png",
+            "description": "Wore by Elvis Presley in Acapulco film.",
+            "price": 756
+        },
+        {
+            "id": 8,
+            "title": "Sneakers",
+            "imageURL": "https://i.imgur.com/4GtCkkJ.png",
+            "description": "Used by Bugs Bunny in Space-Jam",
+            "price": 259.30
+        },
+        {
+            "id": 9,
+            "title": "Shoes",
+            "imageURL": "https://i.imgur.com/uRXDvwK.png",
+            "description": "Only one. Right foot.",
+            "price": 79.99
+        },
+        {
+            "id": 10,
+            "title": "Red Hat",
+            "imageURL": "https://i.imgur.com/qvwxXYY.png",
+            "description": "Outlander's costume. Unique piece!",
+            "price": 250
+        },
+        {
+            "id": 11,
+            "title": "Brown Beanie",
+            "imageURL": "https://i.imgur.com/zZAtqkD.png",
+            "description": "Want to be cool but look like idiot? Buy this hat.",
+            "price": 829.15
+        },
+        {
+            "id": 12,
+            "title": "Blue Jeans",
+            "imageURL": "https://i.imgur.com/PMFkkjS.png",
+            "description": "Blue jeans, white shirt. Walked into the room you know you made my eyes burn",
+            "price": 150.90
+        },
+        {
+            "id": 13,
+            "title": "Brown Pants",
+            "imageURL": "https://i.imgur.com/PmCMb4p.png",
+            "description": "They are so ugly that we give them out for almost nothing",
+            "price": 1.99
+        },
+        {
+            "id": 14,
+            "title": "Radio",
+            "imageURL": "https://i.imgur.com/Xd1YRFS.png",
+            "description": "AM only. Volumne knob broken but works at max volume",
+            "price": 5.99
+        }        
+    ];
+
+        var cart = [];
+	    var cartCount = 0;
+		
+        var totalPrice = 0;
+        var itemsHTML = document.getElementById("items");
+
+		for (var index = 0; index < items.length; index++) {
+            let item = items[index];
+			
+				var divHTML = document.createElement('div');
+                    divHTML.classList.add("divHTML");
+
+                var title = document.createElement("p");
+                    title.classList.add("title");
+    					title.innerHTML = items[index].title;
+                                divHTML.appendChild(title);
+                var image = document.createElement("img");
+                    image.src = items[index].imageURL;
+                        image.classList.add("image");
+                                divHTML.appendChild(image);
+                var description = document.createElement("p");
+                    description.classList.add("itemDesc");
+                        description.innerHTML = items[index].description;
+                                divHTML.appendChild(description);
+                var price = document.createElement("p");
+                    price.classList.add("price");
+                        price.innerHTML = items[index].price + "€";
+                                divHTML.appendChild(price);
+                var addButton = document.createElement("p");
+                    addButton.classList.add("addButton");
+                    addButton.setAttribute("data-cart", -1);
+                        addButton.innerHTML = "Add to cart";
+                            addButton.addEventListener("click", function() {
+                                if (this.parentElement.getElementsByTagName("p")[4].style.display === "none") {
+                                    console.log(item.price);
+                                        totalPrice = totalPrice + item.price;
+                                            cartCount++;
+                                                cart.push(item);
+                                                    console.log("Amount:" + totalPrice.toFixed(2));
+                                                        console.log(item.title + " " + "added to cart");
+                                                            cartPrice();
+                                                            cartAmount();
+                                                            this.parentElement.getElementsByTagName("p")[4].style.display = "block";
+                                }
+                                });
+                divHTML.appendChild(addButton);
+
+                var removeButton = document.createElement("p");
+                    removeButton.innerHTML = "Remove";
+                    removeButton.style.display = "none";
+                    removeButton.classList.add("removeButton");
+                        removeButton.addEventListener("click", function() {
+                            totalPrice = totalPrice - item.price;
+                            cartCount--;
+                            this.style.display = "none";
+                            cartPrice();
+                            cartAmount();
+                });
+
+                divHTML.appendChild(removeButton);
+
+                document.getElementById("items").appendChild(divHTML);
+
+		}
+
+
+        function cartAmount () {
+            document.getElementById("cartAmount").innerHTML = cartCount;
+        }
+        function cartPrice () {
+            document.getElementById("cartPrice").innerHTML = totalPrice.toFixed(2);
+
+            if (document.getElementById("cartPrice").innerHTML === "-0.00") {
+                document.getElementById("cartPrice").innerHTML = "0.00";
+
+            }
+        }
+
+		</script>
+</html>
